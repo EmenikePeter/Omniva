@@ -1,9 +1,16 @@
-
+import { RecordingPresets, useAudioRecorder, useAudioRecorderState } from 'expo-audio';
+import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useAuth } from '../components/AuthContext';
 import { useLanguage } from '../components/LanguageContext';
 import { t } from './tools';
 
 // features will be mapped in the component to use t(key, lang)
 
+export default function Money() {
   const [selected, setSelected] = useState(null);
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
