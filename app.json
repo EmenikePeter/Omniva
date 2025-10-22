@@ -1,39 +1,22 @@
 {
   "expo": {
     "name": "Omniva",
-    "slug": "Omniva",
+    "slug": "omniva",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "omniva",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "icon": "./assets/omniva-logo.png",
     "splash": {
-      "image": "./assets/images/splash-icon.png",
+      "image": "./assets/omniva-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#4B7BEC"
     },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router"
+    "platforms": [
+      "ios",
+      "android",
+      "web"
     ],
-    "experiments": {
-      "typedRoutes": true
-    }
+    "plugins": [
+      "expo-audio"
+    ]
   }
 }

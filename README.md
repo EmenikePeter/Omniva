@@ -1,17 +1,28 @@
-# AI SuperApp
+# Omniva
 
-Hybrid AI platform (Web + Mobile) helping informal traders in Nigeria, India, China & South Africa with Business, Money & Health.
+*Omniva — AI for Every Move You Make*  
+Smart Business. Smart Money. Smart Health.
+
+Omniva is a hybrid AI platform (Web + Mobile) helping users in *Nigeria, India, China & South Africa* manage *Business, Money & Health*.  
+Available in *English, Chinese, and Hausa*.
+
+---
 
 ## Features
-- Chat with AI (Business, Money, Health advice)
-- Tools dashboard (Expense Tracker, Business Ideas, Symptom Check)
-- Multi-language: English, Chinese, Hausa
-- Build in Public (daily updates)
+- *AI Chat:* Get insights, advice, and guidance for business, money, and health.  
+- *Tools Dashboard:* Expense tracker, business idea generator, symptom checker.  
+- *Multi-language:* English, Chinese, Hausa.  
+- *Real-time:* Chat and tool interactions powered by AI.  
+- *Build in Public:* Daily updates, alpha testers welcome.
+
+---
 
 ## Tech Stack
-- Backend: Node.js + Express + MongoDB
-- Frontend: Expo + React Native Web
-- AI: placeholder (OpenAI / LLM integration later)
+- *Backend:* Node.js + Express + MongoDB  
+- *Frontend:* Expo + React Native Web  
+- *AI:* Placeholder for OpenAI/LLM integration  
+
+---
 
 ## Getting Started
 
@@ -21,15 +32,17 @@ cd backend
 npm install
 cp .env.example .env  # add MONGO_URI
 npm run dev
+```
 
-Frontend
-
+Frontend (Expo)
+```bash
 cd mobile
 npm install
 expo start
+```
 
 Notes
 
-Push to GitHub and start sharing your alpha daily updates!
+Update frontend screens with Omniva branding (colors, logo, title).
 
-Connect backend API to chat + tools screens.
+Start sharing daily updates on Twitter/LinkedIn as “Omniva Alpha”.
