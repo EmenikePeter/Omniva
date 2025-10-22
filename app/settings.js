@@ -1,10 +1,14 @@
+
 import { StyleSheet, Text, View } from "react-native";
+import { t } from '../app/tools';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function SettingsScreen() {
+  const { lang } = useLanguage();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-      <Text style={styles.text}>This is the Settings screen.</Text>
+      <Text style={styles.title}>{t('settings', lang)}</Text>
+      <Text style={styles.text}>{t('settingsScreenText', lang)}</Text>
     </View>
   );
 }

@@ -1,21 +1,9 @@
-import { RecordingPresets, useAudioRecorder, useAudioRecorderState } from 'expo-audio';
-import * as ImagePicker from 'expo-image-picker';
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useAuth } from '../components/AuthContext';
 
-const features = [
-  { key: 'track', icon: 'cash', title: 'Track Income/Expenses', desc: 'Log your money in and out (voice/text).' },
-  { key: 'save', icon: 'bank', title: 'Help Save & Invest', desc: 'Get saving/investment advice.' },
-  { key: 'funding', icon: 'hand-coin', title: 'Find Funding/Loans/Grants', desc: 'Discover funding sources.' },
-  { key: 'plan', icon: 'calendar-account', title: 'Plan Personal Finances', desc: 'Budget and plan your finances.' },
-  { key: 'predict', icon: 'chart-bar', title: 'Predict Cashflow', desc: 'Forecast your future cashflow.' },
-  { key: 'habits', icon: 'lightbulb-on', title: 'Teach Money Habits', desc: 'Learn and track good money habits.' }
-];
+import { useLanguage } from '../components/LanguageContext';
+import { t } from './tools';
 
-export default function Money() {
+// features will be mapped in the component to use t(key, lang)
+
   const [selected, setSelected] = useState(null);
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
@@ -35,6 +23,16 @@ export default function Money() {
   const router = useRouter();
   const { user } = useAuth();
   const userId = user?.id || 'guest';
+  const { lang } = useLanguage();
+
+  const features = [
+    { key: 'track', icon: 'cash', title: t('trackIncomeExpenses', lang), desc: t('logMoney', lang) },
+    { key: 'save', icon: 'bank', title: t('helpSaveInvest', lang), desc: t('savingAdvice', lang) },
+    { key: 'funding', icon: 'hand-coin', title: t('findFunding', lang), desc: t('fundingSources', lang) },
+    { key: 'plan', icon: 'calendar-account', title: t('planFinances', lang), desc: t('budgetPlan', lang) },
+    { key: 'predict', icon: 'chart-bar', title: t('predictCashflow', lang), desc: t('forecastCashflow', lang) },
+    { key: 'habits', icon: 'lightbulb-on', title: t('teachMoneyHabits', lang), desc: t('trackHabits', lang) }
+  ];
 
   // Require authentication for actions
   const requireAuth = (action) => {
@@ -198,19 +196,19 @@ export default function Money() {
         <Text style={styles.cardDesc}>{f.desc}</Text>
         <TextInput
           style={styles.input}
-          placeholder={`Enter details...`}
+          placeholder={t('enterDetails', lang)}
           value={input}
           onChangeText={setInput}
           multiline
         />
         <TouchableOpacity style={styles.primaryBtn} onPress={() => handleAI(f.key)} disabled={loading}>
           {loading ? <ActivityIndicator color="#fff" /> : <Icon name={f.icon} size={20} color="#fff" />}
-          <Text style={styles.primaryBtnText}>Ask AI</Text>
+          <Text style={styles.primaryBtnText}>{t('askAI', lang)}</Text>
         </TouchableOpacity>
         {result ? <Text style={styles.resultText}>{result}</Text> : null}
         <TouchableOpacity style={styles.secondaryBtn} onPress={() => { setSelected(null); setInput(''); setResult(''); }}>
           <Icon name="arrow-left" size={20} color="#007AFF" />
-          <Text style={styles.secondaryBtnText}>Back</Text>
+          <Text style={styles.secondaryBtnText}>{t('back', lang)}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -218,19 +216,19 @@ export default function Money() {
 
   return (
     <ScrollView contentContainerStyle={styles.screen}>
-      <Text style={styles.header}>AI Money Brain</Text>
-      <Text style={styles.subhead}>Your personal money assistant.</Text>
+      <Text style={styles.header}>{t('aiMoneyBrain', lang)}</Text>
+      <Text style={styles.subhead}>{t('personalMoneyAssistant', lang)}</Text>
       {/* Email integration UI */}
       <View style={styles.emailBox}>
-        <Text style={styles.emailTitle}>Connect your email to auto-track bank alerts:</Text>
+        <Text style={styles.emailTitle}>{t('connectEmailToTrack', lang)}</Text>
         <View style={{ flexDirection: 'row', gap: 10, marginBottom: 10 }}>
           <TouchableOpacity style={styles.emailBtn} onPress={handleGmailConnect}>
             <Icon name="gmail" size={22} color="#fff" />
-            <Text style={styles.emailBtnText}>Connect Gmail</Text>
+            <Text style={styles.emailBtnText}>{t('connectGmail', lang)}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.emailBtn} onPress={handleOutlookConnect}>
             <Icon name="microsoft-outlook" size={22} color="#fff" />
-            <Text style={styles.emailBtnText}>Connect Outlook</Text>
+            <Text style={styles.emailBtnText}>{t('connectOutlook', lang)}</Text>
           </TouchableOpacity>
         </View>
         {gmailConnected || outlookConnected ? (
@@ -238,11 +236,11 @@ export default function Money() {
             <Text style={styles.emailStatus}>{emailStatus}</Text>
             <TouchableOpacity style={styles.emailBtn} onPress={handleFetchAlerts}>
               <Icon name="refresh" size={20} color="#fff" />
-              <Text style={styles.emailBtnText}>Fetch Bank Alerts</Text>
+              <Text style={styles.emailBtnText}>{t('fetchBankAlerts', lang)}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.emailBtn} onPress={handleFetchAnalytics}>
               <Icon name="chart-bar" size={20} color="#fff" />
-              <Text style={styles.emailBtnText}>Show Analytics</Text>
+              <Text style={styles.emailBtnText}>{t('showAnalytics', lang)}</Text>
             </TouchableOpacity>
             {alertsLoading ? (
               <ActivityIndicator color="#0984e3" style={{ marginTop: 10 }} />
@@ -251,7 +249,7 @@ export default function Money() {
                 {alerts.map((a, i) => (
                   <View key={i} style={styles.alertCard}>
                     <Text style={styles.alertDate}>{a.date}</Text>
-                    <Text style={styles.alertType}>{a.type === 'credit' ? 'Income' : 'Expense'}</Text>
+                    <Text style={styles.alertType}>{a.type === 'credit' ? t('income', lang) : t('expense', lang)}</Text>
                     <Text style={styles.alertAmount}>₦{a.amount}</Text>
                     <Text style={styles.alertDesc}>{a.description}</Text>
                   </View>
@@ -262,14 +260,14 @@ export default function Money() {
               <ActivityIndicator color="#00b894" style={{ marginTop: 10 }} />
             ) : analytics ? (
               <View style={{ marginTop: 16, backgroundColor: '#fff', borderRadius: 10, padding: 14 }}>
-                <Text style={{ fontWeight: '700', color: '#0984e3', fontSize: 16 }}>Spending Analytics</Text>
-                <Text>Total Spent: ₦{analytics.total}</Text>
-                <Text>Advice: {analytics.advice}</Text>
-                <Text style={{ marginTop: 8, fontWeight: '600' }}>By Category:</Text>
+                <Text style={{ fontWeight: '700', color: '#0984e3', fontSize: 16 }}>{t('spendingAnalytics', lang)}</Text>
+                <Text>{t('totalSpent', lang)}: ₦{analytics.total}</Text>
+                <Text>{t('advice', lang)}: {analytics.advice}</Text>
+                <Text style={{ marginTop: 8, fontWeight: '600' }}>{t('byCategory', lang)}:</Text>
                 {Object.entries(analytics.byCategory).map(([cat, amt], idx) => (
                   <Text key={idx}>{cat}: ₦{amt}</Text>
                 ))}
-                <Text style={{ marginTop: 8, fontWeight: '600' }}>By Month:</Text>
+                <Text style={{ marginTop: 8, fontWeight: '600' }}>{t('byMonth', lang)}:</Text>
                 {Object.entries(analytics.byMonth).map(([mon, amt], idx) => (
                   <Text key={idx}>{mon}: ₦{amt}</Text>
                 ))}
@@ -304,23 +302,23 @@ export default function Money() {
       <View style={{ flexDirection: 'row', gap: 12, marginBottom: 10 }}>
         <TouchableOpacity style={styles.emailBtn} onPress={handleStartRecording} disabled={isRecording}>
           <Icon name="microphone" size={22} color="#fff" />
-          <Text style={styles.emailBtnText}>Start Voice</Text>
+          <Text style={styles.emailBtnText}>{t('startVoice', lang)}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.emailBtn} onPress={handleStopRecording} disabled={!isRecording}>
           <Icon name="microphone-off" size={22} color="#fff" />
-          <Text style={styles.emailBtnText}>Stop Voice</Text>
+          <Text style={styles.emailBtnText}>{t('stopVoice', lang)}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.emailBtn} onPress={handleSendVoice}>
           <Icon name="send" size={22} color="#fff" />
-          <Text style={styles.emailBtnText}>Send Voice</Text>
+          <Text style={styles.emailBtnText}>{t('sendVoice', lang)}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.emailBtn} onPress={handlePickImage}>
           <Icon name="image" size={22} color="#fff" />
-          <Text style={styles.emailBtnText}>Pick Image</Text>
+          <Text style={styles.emailBtnText}>{t('pickImage', lang)}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.emailBtn} onPress={handleSendImage}>
           <Icon name="send" size={22} color="#fff" />
-          <Text style={styles.emailBtnText}>Send Image</Text>
+          <Text style={styles.emailBtnText}>{t('sendImage', lang)}</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

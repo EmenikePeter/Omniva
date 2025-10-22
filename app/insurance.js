@@ -1,7 +1,10 @@
+
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { t } from '../app/tools';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function Insurance() {
   const [policies, setPolicies] = useState([]);
@@ -12,6 +15,7 @@ export default function Insurance() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { user } = useAuth();
+  const { lang } = useLanguage();
 
   // Require authentication for actions
   const requireAuth = (action) => {
@@ -46,14 +50,14 @@ export default function Insurance() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Insurance</Text>
+      <Text style={styles.title}>{t('insurance', lang)}</Text>
       <View style={styles.form}>
-        <TextInput style={styles.input} placeholder="Policy Name" value={policyName} onChangeText={setPolicyName} />
-        <TextInput style={styles.input} placeholder="Description" value={description} onChangeText={setDescription} />
-        <TextInput style={styles.input} placeholder="Premium" value={premium} onChangeText={setPremium} keyboardType="numeric" />
-        <TextInput style={styles.input} placeholder="Coverage" value={coverage} onChangeText={setCoverage} />
+        <TextInput style={styles.input} placeholder={t('policyName', lang)} value={policyName} onChangeText={setPolicyName} />
+        <TextInput style={styles.input} placeholder={t('description', lang)} value={description} onChangeText={setDescription} />
+        <TextInput style={styles.input} placeholder={t('premium', lang)} value={premium} onChangeText={setPremium} keyboardType="numeric" />
+        <TextInput style={styles.input} placeholder={t('coverage', lang)} value={coverage} onChangeText={setCoverage} />
         <TouchableOpacity style={styles.button} onPress={handleCreate} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Adding...' : 'Add Policy'}</Text>
+          <Text style={styles.buttonText}>{loading ? t('adding', lang) : t('addPolicy', lang)}</Text>
         </TouchableOpacity>
       </View>
       <FlatList

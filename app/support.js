@@ -1,10 +1,14 @@
+
 import { StyleSheet, Text, View } from "react-native";
+import { t } from '../app/tools';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function SupportScreen() {
+  const { lang } = useLanguage();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Support</Text>
-      <Text style={styles.text}>This is the Support screen.</Text>
+      <Text style={styles.title}>{t('support', lang)}</Text>
+      <Text style={styles.text}>{t('supportScreenText', lang)}</Text>
     </View>
   );
 }

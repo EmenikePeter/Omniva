@@ -10,6 +10,36 @@ import { useAuth } from '../components/AuthContext';
 // Set your backend API base URL here for development/production
 const API_BASE = 'http://localhost:5000/api/b2b';
 
+// Translation helper: function that also holds phrase maps so it can be used
+// both as t('key', lang) and as t.key[lang] in existing code.
+function t(key, lang) {
+	if (typeof key === 'string' && lang) {
+		return t[key] && t[key][lang] ? t[key][lang] : key;
+	}
+	return key;
+}
+
+// Phrase maps used as t.key[lang]
+t.title = { en: 'Expense/Income Tracker', zh: '收支记录', ha: 'Mai Bibiyar Kudin Shiga/Fita' };
+t.amount = { en: 'Amount', zh: '金额', ha: 'Adadin' };
+t.category = { en: 'Category', zh: '类别', ha: 'Rukuni' };
+t.note = { en: 'Note', zh: '备注', ha: 'Bayanan kula' };
+t.addExpense = { en: 'Add Expense', zh: '添加支出', ha: 'Ƙara Kudin Fita' };
+t.addIncome = { en: 'Add Income', zh: '添加收入', ha: 'Ƙara Kudin Shiga' };
+t.switchToIncome = { en: 'Switch to Income', zh: '切换到收入', ha: 'Canza zuwa Kudin Shiga' };
+t.switchToExpense = { en: 'Switch to Expense', zh: '切换到支出', ha: 'Canza zuwa Kudin Fita' };
+t.subtitle = { en: 'Your Expenses/Income', zh: '你的收支', ha: 'Kudin shiga/fita naka' };
+t.noRecords = { en: 'No records yet.', zh: '暂无记录。', ha: 'Babu bayanai tukuna.' };
+t.businessTools = { en: 'Business Tools', zh: '商业工具', ha: 'Kayan Kasuwanci' };
+
+// Add tab labels for segmented controls
+t.toolsTab = { en: 'Tools', zh: '工具', ha: 'Kayan Aiki' };
+t.businessTab = { en: 'Business', zh: '商业', ha: 'Kasuwanci' };
+t.marketplaceTab = { en: 'Marketplace', zh: '市场', ha: 'Kasuwa' };
+t.communityTab = { en: 'Community', zh: '社区', ha: "Al'umma" };
+
+export { t };
+
 export default function ToolsScreen() {
 	const { user } = useAuth();
 	const router = useRouter();
@@ -29,34 +59,6 @@ export default function ToolsScreen() {
 		}
 		action && action();
 	};
-
-	// Translation helper: function that also holds phrase maps so it can be used
-	// both as t('key', lang) and as t.key[lang] in existing code.
-	function t(key, lang) {
-		if (typeof key === 'string' && lang) {
-			return t[key] && t[key][lang] ? t[key][lang] : key;
-		}
-		return key;
-	}
-
-	// Phrase maps used as t.key[lang]
-	t.title = { en: 'Expense/Income Tracker', zh: '收支记录', ha: 'Mai Bibiyar Kudin Shiga/Fita' };
-	t.amount = { en: 'Amount', zh: '金额', ha: 'Adadin' };
-	t.category = { en: 'Category', zh: '类别', ha: 'Rukuni' };
-	t.note = { en: 'Note', zh: '备注', ha: 'Bayanan kula' };
-	t.addExpense = { en: 'Add Expense', zh: '添加支出', ha: 'Ƙara Kudin Fita' };
-	t.addIncome = { en: 'Add Income', zh: '添加收入', ha: 'Ƙara Kudin Shiga' };
-	t.switchToIncome = { en: 'Switch to Income', zh: '切换到收入', ha: 'Canza zuwa Kudin Shiga' };
-	t.switchToExpense = { en: 'Switch to Expense', zh: '切换到支出', ha: 'Canza zuwa Kudin Fita' };
-	t.subtitle = { en: 'Your Expenses/Income', zh: '你的收支', ha: 'Kudin shiga/fita naka' };
-	t.noRecords = { en: 'No records yet.', zh: '暂无记录。', ha: 'Babu bayanai tukuna.' };
-	t.businessTools = { en: 'Business Tools', zh: '商业工具', ha: 'Kayan Kasuwanci' };
-
-	// Add tab labels for segmented controls
-	t.toolsTab = { en: 'Tools', zh: '工具', ha: 'Kayan Aiki' };
-	t.businessTab = { en: 'Business', zh: '商业', ha: 'Kasuwanci' };
-	t.marketplaceTab = { en: 'Marketplace', zh: '市场', ha: 'Kasuwa' };
-	t.communityTab = { en: 'Community', zh: '社区', ha: "Al'umma" };
 
 	// Load cached expenses and fetch from backend when user changes
 	useEffect(() => {

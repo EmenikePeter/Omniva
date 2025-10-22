@@ -1,7 +1,9 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { t } from '../app/tools';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function CommunityScreen() {
   const [posts, setPosts] = useState([]);
@@ -10,6 +12,7 @@ export default function CommunityScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { user } = useAuth();
+  const { lang } = useLanguage();
 
   useEffect(() => {
     fetch('/api/community/posts')
@@ -42,12 +45,12 @@ export default function CommunityScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Community</Text>
+      <Text style={styles.title}>{t('community', lang)}</Text>
       <View style={styles.form}>
-        <TextInput style={styles.input} placeholder="Your Name" value={author} onChangeText={setAuthor} />
-        <TextInput style={styles.input} placeholder="What's on your mind?" value={content} onChangeText={setContent} multiline />
+        <TextInput style={styles.input} placeholder={t('author', lang)} value={author} onChangeText={setAuthor} />
+        <TextInput style={styles.input} placeholder={t('content', lang)} value={content} onChangeText={setContent} multiline />
         <TouchableOpacity style={styles.button} onPress={handleCreate} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Posting...' : 'Post'}</Text>
+          <Text style={styles.buttonText}>{loading ? t('posting', lang) : t('post', lang)}</Text>
         </TouchableOpacity>
       </View>
       <FlatList

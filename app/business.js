@@ -5,7 +5,9 @@ import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { t } from '../app/tools';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function Business() {
   const [ideaResult, setIdeaResult] = useState('');
@@ -35,6 +37,7 @@ export default function Business() {
     loadBusinessIdea();
   }, []);
 
+          const { lang } = useLanguage();
   // Save business idea to cache on change
   useEffect(() => {
     AsyncStorage.setItem('businessIdea', ideaResult);
@@ -95,10 +98,10 @@ export default function Business() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Business Brain</Text>
+      <Text style={styles.title}>{t('businessIdeaGenerator', lang)}</Text>
       <TouchableOpacity style={styles.button} onPress={fetchBusinessIdea}>
         <Icon name="lightbulb-on" size={24} color="#fff" />
-        <Text style={styles.buttonText}>Get Business Idea</Text>
+        <Text style={styles.buttonText}>{ideaLoading ? t('loading', lang) : t('getBusinessIdea', lang)}</Text>
       </TouchableOpacity>
       {ideaLoading ? <ActivityIndicator /> : <Text style={styles.result}>{ideaResult}</Text>}
 

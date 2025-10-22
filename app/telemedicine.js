@@ -1,7 +1,9 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { t } from '../app/tools';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function TelemedicineScreen() {
   const [appointments, setAppointments] = useState([]);
@@ -12,6 +14,7 @@ export default function TelemedicineScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { user } = useAuth();
+  const { lang } = useLanguage();
 
   useEffect(() => {
     fetch('/api/telemedicine/appointments')
@@ -44,14 +47,14 @@ export default function TelemedicineScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Telemedicine</Text>
+      <Text style={styles.title}>{t('telemedicine', lang)}</Text>
       <View style={styles.form}>
-        <TextInput style={styles.input} placeholder="Patient Name" value={patientName} onChangeText={setPatientName} />
-        <TextInput style={styles.input} placeholder="Doctor Name" value={doctorName} onChangeText={setDoctorName} />
-        <TextInput style={styles.input} placeholder="Date (YYYY-MM-DD)" value={date} onChangeText={setDate} />
-        <TextInput style={styles.input} placeholder="Reason" value={reason} onChangeText={setReason} />
+        <TextInput style={styles.input} placeholder={t('patientName', lang)} value={patientName} onChangeText={setPatientName} />
+        <TextInput style={styles.input} placeholder={t('doctorName', lang)} value={doctorName} onChangeText={setDoctorName} />
+        <TextInput style={styles.input} placeholder={t('date', lang)} value={date} onChangeText={setDate} />
+        <TextInput style={styles.input} placeholder={t('reason', lang)} value={reason} onChangeText={setReason} />
         <TouchableOpacity style={styles.button} onPress={handleCreate} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Booking...' : 'Book Appointment'}</Text>
+          <Text style={styles.buttonText}>{loading ? t('booking', lang) : t('bookAppointment', lang)}</Text>
         </TouchableOpacity>
       </View>
       <FlatList

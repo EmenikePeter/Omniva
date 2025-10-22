@@ -1,3 +1,4 @@
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
@@ -6,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function Health() {
   const [selected, setSelected] = useState(null);
@@ -38,6 +40,7 @@ export default function Health() {
   const [imageStatus, setImageStatus] = useState('');
   const router = useRouter();
   const { user } = useAuth();
+  const { lang } = useLanguage();
 
   // Require authentication for actions
   const requireAuth = (action) => {

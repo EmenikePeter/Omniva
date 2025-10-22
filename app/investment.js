@@ -1,7 +1,10 @@
+
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { t } from '../app/tools';
 import { useAuth } from '../components/AuthContext';
+import { useLanguage } from '../components/LanguageContext';
 
 export default function Investment() {
   const [opportunities, setOpportunities] = useState([]);
@@ -11,6 +14,7 @@ export default function Investment() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { user } = useAuth();
+  const { lang } = useLanguage();
 
   // Require authentication for actions
   const requireAuth = (action) => {
@@ -45,13 +49,13 @@ export default function Investment() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Investment</Text>
+      <Text style={styles.title}>{t('investment', lang)}</Text>
       <View style={styles.form}>
-        <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle} />
-        <TextInput style={styles.input} placeholder="Description" value={description} onChangeText={setDescription} />
-        <TextInput style={styles.input} placeholder="Amount" value={amount} onChangeText={setAmount} keyboardType="numeric" />
+        <TextInput style={styles.input} placeholder={t('title', lang)} value={title} onChangeText={setTitle} />
+        <TextInput style={styles.input} placeholder={t('description', lang)} value={description} onChangeText={setDescription} />
+        <TextInput style={styles.input} placeholder={t('amount', lang)} value={amount} onChangeText={setAmount} keyboardType="numeric" />
         <TouchableOpacity style={styles.button} onPress={handleCreate} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Adding...' : 'Add Opportunity'}</Text>
+          <Text style={styles.buttonText}>{loading ? t('adding', lang) : t('addOpportunity', lang)}</Text>
         </TouchableOpacity>
       </View>
       <FlatList
